@@ -277,12 +277,12 @@ export default function Home() {
                   Saved meals
                 </p>
 
-                <div className="flex gap-3 overflow-x-auto pb-2">
+                <div className="grid max-h-[260px] grid-cols-2 gap-3 overflow-y-auto pr-1 sm:grid-cols-2">
                   {savedMeals.map((meal) => (
                     <button
                       key={meal.id}
                       onClick={() => handleSavedMealSelect(meal.id)}
-                      className="min-w-[180px] rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-left transition hover:border-emerald-500"
+                      className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-left transition hover:border-emerald-500"
                     >
                       <p className="font-semibold text-slate-100">{meal.name}</p>
                       <p className="mt-1 text-xs capitalize text-emerald-400">
