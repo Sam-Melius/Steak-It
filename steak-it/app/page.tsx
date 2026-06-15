@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import BottomNav from "./components/BottomNav";
 
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -178,23 +179,23 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-stone-950 text-stone-100">
-      <div className="mx-auto max-w-6xl px-6 py-8">
+    <main className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="mx-auto max-w-md px-4 pb-28 pt-6 md:max-w-6xl md:px-6 md:py-8">
         <header className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-orange-400">
+            <p className="text-sm uppercase tracking-[0.3em] text-emerald-500">
               Steak-It
             </p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tight">
+            <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
               Daily Fitness Tracker
             </h1>
-            <p className="mt-2 max-w-2xl text-stone-400">
+            <p className="mt-2 max-w-2xl text-slate-400">
               Track meals, exercise, calories, macros, saved meals, and progress.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-stone-800 bg-stone-900/70 p-4">
-            <label className="block text-xs uppercase tracking-widest text-stone-500">
+          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+            <label className="block text-xs uppercase tracking-widest text-slate-500">
               Daily calorie goal
             </label>
             <input
@@ -203,18 +204,18 @@ export default function Home() {
               onChange={(e) =>
                 setProfile({ dailyCalorieGoal: Number(e.target.value) })
               }
-              className="mt-2 w-32 rounded-xl border border-stone-700 bg-stone-950 px-3 py-2 text-lg font-semibold outline-none focus:border-orange-400"
+              className="mt-2 w-32 rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-lg font-semibold outline-none focus:border-emerald-500"
             />
           </div>
           <Link
             href="/profile"
-            className="rounded-xl border border-stone-700 px-5 py-3 text-sm font-semibold text-stone-200 transition hover:border-orange-400 hover:text-orange-300"
+            className="rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-emerald-500 hover:bg-emerald-400"
           >
             Profile
           </Link>
         </header>
 
-        <section className="mb-8 grid gap-4 md:grid-cols-5">
+        <section className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
           <Stat label="Calories" value={totals.calories} />
           <Stat label="Exercise" value={totals.exerciseCalories} />
           <Stat label="Net" value={totals.netCalories} />
@@ -222,27 +223,27 @@ export default function Home() {
           <Stat label="Protein" value={`${totals.protein}g`} />
         </section>
 
-        <section className="mb-8 rounded-3xl border border-stone-800 bg-stone-900/60 p-5">
-          <label className="text-xs uppercase tracking-widest text-stone-500">
+        <section className="mb-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-5">
+          <label className="text-xs uppercase tracking-widest text-slate-500">
             Entry date
           </label>
           <input
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="mt-2 rounded-xl border border-stone-700 bg-stone-950 px-3 py-2 outline-none focus:border-orange-400"
+            className="mt-2 rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 outline-none focus:border-emerald-500"
           />
         </section>
 
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-4 md:p-6">
             <h2 className="text-2xl font-semibold">Add meal</h2>
 
             <div className="mt-5 grid gap-4">
               <select
                 value={selectedSavedMealId}
                 onChange={(e) => handleSavedMealSelect(e.target.value)}
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               >
                 <option value="">Choose saved meal or enter manually</option>
                 {savedMeals.map((meal) => (
@@ -258,7 +259,7 @@ export default function Home() {
                 onChange={(e) =>
                   setMealForm((prev) => ({ ...prev, mealName: e.target.value }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
               <select
@@ -269,7 +270,7 @@ export default function Home() {
                     category: e.target.value as MealCategory,
                   }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -288,13 +289,13 @@ export default function Home() {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => addDailyMeal(false)}
-                  className="rounded-xl bg-orange-400 px-5 py-3 font-semibold text-stone-950 transition hover:bg-orange-300"
+                  className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-orange-300"
                 >
                   Add to day
                 </button>
                 <button
                   onClick={() => addDailyMeal(true)}
-                  className="rounded-xl border border-stone-700 px-5 py-3 font-semibold text-stone-200 transition hover:border-orange-400 hover:text-orange-300"
+                  className="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200 transition hover:border-emerald-500 hover:bg-emerald-400"
                 >
                   Add + save meal
                 </button>
@@ -302,7 +303,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-4 md:p-6">
             <h2 className="text-2xl font-semibold">Add exercise</h2>
 
             <div className="mt-5 grid gap-4">
@@ -312,7 +313,7 @@ export default function Home() {
                 onChange={(e) =>
                   setExerciseForm((prev) => ({ ...prev, name: e.target.value }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
               <input
@@ -325,7 +326,7 @@ export default function Home() {
                     caloriesBurned: Number(e.target.value),
                   }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
               <input
@@ -338,12 +339,12 @@ export default function Home() {
                     durationMinutes: Number(e.target.value),
                   }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
               <button
                 onClick={addExercise}
-                className="rounded-xl bg-stone-100 px-5 py-3 font-semibold text-stone-950 transition hover:bg-white"
+                className="rounded-xl bg-slate-100 px-5 py-3 font-semibold text-slate-950 transition hover:bg-white"
               >
                 Add exercise
               </button>
@@ -375,14 +376,15 @@ export default function Home() {
           />
         </section>
       </div>
+      <BottomNav />
     </main>
   );
 }
 
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
-    <div className="rounded-2xl border border-stone-800 bg-stone-900/70 p-4">
-      <p className="text-xs uppercase tracking-widest text-stone-500">{label}</p>
+    <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+      <p className="text-xs uppercase tracking-widest text-slate-500">{label}</p>
       <p className="mt-2 text-2xl font-bold">{value}</p>
     </div>
   );
@@ -399,14 +401,14 @@ function MacroInput({
 }) {
   return (
     <label className="block">
-      <span className="text-xs uppercase tracking-widest text-stone-500">
+      <span className="text-xs uppercase tracking-widest text-slate-500">
         {label}
       </span>
       <input
         type="number"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-2 w-full rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+        className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
       />
     </label>
   );
@@ -422,24 +424,24 @@ function EntryList({
   onDelete: (id: string) => void;
 }) {
   return (
-    <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+    <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-4 md:p-6">
       <h2 className="text-2xl font-semibold">{title}</h2>
       <div className="mt-5 space-y-3">
         {items.length === 0 ? (
-          <p className="text-sm text-stone-500">No entries yet.</p>
+          <p className="text-sm text-slate-500">No entries yet.</p>
         ) : (
           items.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between gap-4 rounded-2xl border border-stone-800 bg-stone-950/70 p-4"
+              className="flex items-center justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-950/70 p-4"
             >
               <div>
                 <p className="font-semibold">{item.title}</p>
-                <p className="mt-1 text-sm text-stone-500">{item.subtitle}</p>
+                <p className="mt-1 text-sm text-slate-500">{item.subtitle}</p>
               </div>
               <button
                 onClick={() => onDelete(item.id)}
-                className="text-sm text-stone-500 hover:text-red-400"
+                className="text-sm text-slate-500 hover:text-red-400"
               >
                 Delete
               </button>

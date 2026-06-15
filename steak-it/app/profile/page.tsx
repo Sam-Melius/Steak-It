@@ -1,4 +1,5 @@
 "use client";
+import BottomNav from "../components/BottomNav";
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -88,15 +89,15 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="min-h-screen bg-stone-950 text-stone-100">
-      <div className="mx-auto max-w-6xl px-6 py-8">
+    <main className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="mx-auto max-w-md px-4 pb-28 pt-6 md:max-w-6xl md:px-6 md:py-8">
         <header className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-orange-400">
+            <p className="text-sm uppercase tracking-[0.3em] text-emerald-500">
               Steak-It
             </p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tight">Profile</h1>
-            <p className="mt-2 max-w-2xl text-stone-400">
+            <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Profile</h1>
+            <p className="mt-2 max-w-2xl text-slate-400">
               Manage saved meals, daily calorie goals, weight progress, and past
               entries.
             </p>
@@ -104,18 +105,18 @@ export default function ProfilePage() {
 
           <Link
             href="/"
-            className="rounded-xl border border-stone-700 px-5 py-3 text-sm font-semibold text-stone-200 transition hover:border-orange-400 hover:text-orange-300"
+            className="rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-emerald-500 hover:border-emerald-500"
           >
             Back to dashboard
           </Link>
         </header>
 
         <div className="grid gap-8">
-          <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
             <h2 className="text-2xl font-semibold">Daily calorie goal</h2>
 
             <div className="mt-5 max-w-xs">
-              <label className="block text-xs uppercase tracking-widest text-stone-500">
+              <label className="block text-xs uppercase tracking-widest text-slate-500">
                 Calories
               </label>
               <input
@@ -124,22 +125,22 @@ export default function ProfilePage() {
                 onChange={(e) =>
                   setProfile({ dailyCalorieGoal: Number(e.target.value) })
                 }
-                className="mt-2 w-full rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 text-lg font-semibold outline-none focus:border-orange-400"
+                className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-lg font-semibold outline-none focus:border-emerald-500"
               />
             </div>
           </section>
 
-          <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
             <h2 className="text-2xl font-semibold">Weight progress</h2>
 
-            <div className="mt-5 grid gap-4 md:grid-cols-[1fr_1fr_auto]">
+            <div className="mt-5 grid gap-3 md:grid-cols-[1fr_1fr_auto]">
               <input
                 type="date"
                 value={weightForm.date}
                 onChange={(e) =>
                   setWeightForm((prev) => ({ ...prev, date: e.target.value }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
               <input
@@ -152,20 +153,20 @@ export default function ProfilePage() {
                     weight: Number(e.target.value),
                   }))
                 }
-                className="rounded-xl border border-stone-700 bg-stone-950 px-3 py-3 outline-none focus:border-orange-400"
+                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
               <button
                 onClick={addWeightEntry}
-                className="rounded-xl bg-orange-400 px-5 py-3 font-semibold text-stone-950 transition hover:bg-orange-300"
+                className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-orange-300"
               >
                 Add
               </button>
             </div>
 
-            <div className="mt-8 h-72 rounded-2xl border border-stone-800 bg-stone-950/60 p-4">
+            <div className="mt-8 h-72 rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
               {sortedWeights.length < 2 ? (
-                <div className="flex h-full items-center justify-center text-sm text-stone-500">
+                <div className="flex h-full items-center justify-center text-sm text-slate-500">
                   Add at least two weight entries to see a graph.
                 </div>
               ) : (
@@ -184,7 +185,7 @@ export default function ProfilePage() {
                     <Line
                       type="monotone"
                       dataKey="weight"
-                      stroke="#fb923c"
+                      stroke="#10b981"
                       strokeWidth={3}
                       dot={{ r: 4 }}
                     />
@@ -197,15 +198,15 @@ export default function ProfilePage() {
               {sortedWeights.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex items-center justify-between rounded-2xl border border-stone-800 bg-stone-950/70 p-4"
+                  className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-950/70 p-4"
                 >
                   <div>
                     <p className="font-semibold">{entry.weight} lbs</p>
-                    <p className="text-sm text-stone-500">{entry.date}</p>
+                    <p className="text-sm text-slate-500">{entry.date}</p>
                   </div>
                   <button
                     onClick={() => deleteWeightEntry(entry.id)}
-                    className="text-sm text-stone-500 hover:text-red-400"
+                    className="text-sm text-slate-500 hover:text-red-400"
                   >
                     Delete
                   </button>
@@ -214,23 +215,23 @@ export default function ProfilePage() {
             </div>
           </section>
 
-          <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
             <h2 className="text-2xl font-semibold">Saved meals</h2>
 
             <div className="mt-5 grid gap-3">
               {savedMeals.length === 0 ? (
-                <p className="text-sm text-stone-500">
+                <p className="text-sm text-slate-500">
                   No saved meals yet. Save meals from the dashboard.
                 </p>
               ) : (
                 savedMeals.map((meal) => (
                   <div
                     key={meal.id}
-                    className="flex flex-col justify-between gap-4 rounded-2xl border border-stone-800 bg-stone-950/70 p-4 md:flex-row md:items-center"
+                    className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-950/70 p-4 md:flex-row md:items-center"
                   >
                     <div>
                       <p className="font-semibold">{meal.name}</p>
-                      <p className="mt-1 text-sm text-stone-500">
+                      <p className="mt-1 text-sm text-slate-500">
                         {meal.category} · {meal.nutrition.calories} cal ·{" "}
                         {meal.nutrition.carbs}g carbs · {meal.nutrition.fiber}g
                         fiber · {meal.nutrition.protein}g protein
@@ -239,7 +240,7 @@ export default function ProfilePage() {
 
                     <button
                       onClick={() => deleteSavedMeal(meal.id)}
-                      className="text-left text-sm text-stone-500 hover:text-red-400"
+                      className="text-left text-sm text-slate-500 hover:text-red-400"
                     >
                       Delete
                     </button>
@@ -249,12 +250,12 @@ export default function ProfilePage() {
             </div>
           </section>
 
-          <section className="rounded-3xl border border-stone-800 bg-stone-900/60 p-6">
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
             <h2 className="text-2xl font-semibold">Past daily entries</h2>
 
             <div className="mt-5 grid gap-3">
               {pastDates.length === 0 ? (
-                <p className="text-sm text-stone-500">No past entries yet.</p>
+                <p className="text-sm text-slate-500">No past entries yet.</p>
               ) : (
                 pastDates.map((date) => {
                   const mealsForDate = dailyMeals.filter(
@@ -276,10 +277,10 @@ export default function ProfilePage() {
                   return (
                     <div
                       key={date}
-                      className="rounded-2xl border border-stone-800 bg-stone-950/70 p-4"
+                      className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4"
                     >
                       <p className="font-semibold">{date}</p>
-                      <p className="mt-1 text-sm text-stone-500">
+                      <p className="mt-1 text-sm text-slate-500">
                         {mealsForDate.length} meals · {exercisesForDate.length}{" "}
                         exercises · {calories} cal eaten · {burned} cal burned
                       </p>
@@ -291,6 +292,7 @@ export default function ProfilePage() {
           </section>
         </div>
       </div>
+      <BottomNav />
     </main>
   );
 }
