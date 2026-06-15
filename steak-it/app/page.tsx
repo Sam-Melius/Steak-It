@@ -202,7 +202,10 @@ export default function Home() {
               type="number"
               value={profile.dailyCalorieGoal}
               onChange={(e) =>
-                setProfile({ dailyCalorieGoal: Number(e.target.value) })
+                setProfile((prev) => ({
+                  ...prev,
+                  dailyCalorieGoal: Number(e.target.value),
+                }))
               }
               className="mt-2 w-32 rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-lg font-semibold outline-none focus:border-emerald-500"
             />
