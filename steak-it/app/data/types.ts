@@ -46,6 +46,7 @@ export type Profile = {
   fiberGoal: number;
   proteinGoal: number;
   exerciseGoal: number;
+  exerciseMinutesGoal: number;
   weightGoal: number;
   age: number;
   heightFeet: number;

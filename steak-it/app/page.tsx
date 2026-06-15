@@ -38,6 +38,7 @@ const defaultProfile: Profile = {
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
+  exerciseMinutesGoal: 30,
 };
 
 export default function Home() {
@@ -104,12 +105,18 @@ export default function Home() {
       0
     );
 
+    const exerciseMinutes = todaysExercises.reduce(
+      (sum, exercise) => sum + (exercise.durationMinutes || 0),
+      0
+    );
+
     return {
       ...mealTotals,
       exerciseCalories,
-      netCalories: mealTotals.calories - exerciseCalories,
-      remaining: profile.dailyCalorieGoal - (mealTotals.calories - exerciseCalories),
+      exerciseMinutes,
+      remaining: profile.dailyCalorieGoal - mealTotals.calories,
     };
+
   }, [todaysMeals, todaysExercises, profile.dailyCalorieGoal]);
 
   function updateNutrition(field: keyof NutritionFacts, value: string) {
@@ -253,10 +260,10 @@ export default function Home() {
 
         <section className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
           <Stat label="Calories" value={`${totals.calories}/${profile.dailyCalorieGoal}`} />
-          <Stat label="Exercise" value={`${totals.exerciseCalories}/${profile.exerciseGoal}`} />
-          <Stat label="Net" value={totals.netCalories} />
+          <Stat label="Remaining" value={totals.remaining} />
           <Stat label="Protein" value={`${totals.protein}g/${profile.proteinGoal}g`} />
           <Stat label="Fiber" value={`${totals.fiber}g/${profile.fiberGoal}g`} />
+          <Stat label="Exercise" value={`${totals.exerciseMinutes}/${profile.exerciseMinutesGoal} min`} />
         </section>
 
         <section className="mb-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-5">
