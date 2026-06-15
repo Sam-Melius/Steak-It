@@ -43,6 +43,10 @@ export type WeightEntry = {
 
 export type Profile = {
   dailyCalorieGoal: number;
+  fiberGoal: number;
+  proteinGoal: number;
+  exerciseGoal: number;
+  weightGoal: number;
   age: number;
   heightFeet: number;
   heightInches: number;
