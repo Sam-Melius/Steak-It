@@ -235,7 +235,7 @@ export default function MigrainesPage() {
                   }))
                 }
                 className="input"
-                placeholder="Example: sumatriptan, ibuprofen"
+                placeholder="Example: Nurtec, ibuprofen"
               />
             </Field>
 
