@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -205,6 +206,12 @@ export default function Home() {
               className="mt-2 w-32 rounded-xl border border-stone-700 bg-stone-950 px-3 py-2 text-lg font-semibold outline-none focus:border-orange-400"
             />
           </div>
+          <Link
+            href="/profile"
+            className="rounded-xl border border-stone-700 px-5 py-3 text-sm font-semibold text-stone-200 transition hover:border-orange-400 hover:text-orange-300"
+          >
+            Profile
+          </Link>
         </header>
 
         <section className="mb-8 grid gap-4 md:grid-cols-5">
