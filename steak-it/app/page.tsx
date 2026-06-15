@@ -30,6 +30,10 @@ const emptyNutrition: NutritionFacts = {
 
 const defaultProfile: Profile = {
   dailyCalorieGoal: 1800,
+  fiberGoal: 25,
+  proteinGoal: 120,
+  exerciseGoal: 300,
+  weightGoal: 0,
   age: 0,
   heightFeet: 5,
   heightInches: 4,
@@ -248,11 +252,11 @@ export default function Home() {
         </header>
 
         <section className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
-          <Stat label="Calories" value={totals.calories} />
-          <Stat label="Exercise" value={totals.exerciseCalories} />
+          <Stat label="Calories" value={`${totals.calories}/${profile.dailyCalorieGoal}`} />
+          <Stat label="Exercise" value={`${totals.exerciseCalories}/${profile.exerciseGoal}`} />
           <Stat label="Net" value={totals.netCalories} />
-          <Stat label="Remaining" value={totals.remaining} />
-          <Stat label="Protein" value={`${totals.protein}g`} />
+          <Stat label="Protein" value={`${totals.protein}g/${profile.proteinGoal}g`} />
+          <Stat label="Fiber" value={`${totals.fiber}g/${profile.fiberGoal}g`} />
         </section>
 
         <section className="mb-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-5">

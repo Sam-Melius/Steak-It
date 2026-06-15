@@ -1,8 +1,8 @@
 "use client";
-import BottomNav from "../components/BottomNav";
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import BottomNav from "../components/BottomNav";
 import {
   DailyMealEntry,
   ExerciseEntry,
@@ -19,17 +19,22 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  ReferenceLine,
 } from "recharts";
 
-export default function ProfilePage() {
 const defaultProfile: Profile = {
   dailyCalorieGoal: 1800,
+  fiberGoal: 25,
+  proteinGoal: 120,
+  exerciseGoal: 300,
+  weightGoal: 0,
   age: 0,
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
 };
 
+export default function ProfilePage() {
   const [profile, setProfile] = useState<Profile>(defaultProfile);
   const [savedMeals, setSavedMeals] = useState<SavedMeal[]>([]);
   const [dailyMeals, setDailyMeals] = useState<DailyMealEntry[]>([]);
@@ -42,13 +47,7 @@ const defaultProfile: Profile = {
   });
 
   useEffect(() => {
-    setProfile(getStorageItem(STORAGE_KEYS.profile, {
-  dailyCalorieGoal: 1800,
-  age: 0,
-  heightFeet: 5,
-  heightInches: 4,
-  sex: "female",
-}));
+    setProfile(getStorageItem(STORAGE_KEYS.profile, defaultProfile));
     setSavedMeals(getStorageItem(STORAGE_KEYS.savedMeals, []));
     setDailyMeals(getStorageItem(STORAGE_KEYS.dailyMeals, []));
     setExercises(getStorageItem(STORAGE_KEYS.exercises, []));
@@ -110,120 +109,116 @@ const defaultProfile: Profile = {
             <p className="text-sm uppercase tracking-[0.3em] text-emerald-500">
               Steak-It
             </p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">Profile</h1>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+              Profile
+            </h1>
             <p className="mt-2 max-w-2xl text-slate-400">
-              Manage saved meals, daily calorie goals, weight progress, and past
-              entries.
+              Manage goals, saved meals, weight progress, and past entries.
             </p>
           </div>
 
           <Link
             href="/"
-            className="rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-emerald-500 hover:border-emerald-500"
+            className="rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-emerald-500 hover:text-emerald-300"
           >
             Back to dashboard
           </Link>
         </header>
 
         <div className="grid gap-8">
-        <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
-        <h2 className="text-2xl font-semibold">Profile Settings</h2>
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+            <h2 className="text-2xl font-semibold">Profile settings</h2>
 
-        <div className="mt-5 max-w-xs">
-            <label className="block text-xs uppercase tracking-widest text-slate-500">
-            Daily Calorie Goal
-            </label>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <GoalInput
+                label="Daily Calorie Goal"
+                value={profile.dailyCalorieGoal}
+                onChange={(value) =>
+                  setProfile((prev) => ({
+                    ...prev,
+                    dailyCalorieGoal: value,
+                  }))
+                }
+              />
 
-            <input
-            type="number"
-            value={profile.dailyCalorieGoal}
-            onChange={(e) =>
-                setProfile((prev) => ({
-                ...prev,
-                dailyCalorieGoal: Number(e.target.value),
-                }))
-            }
-            className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-lg font-semibold outline-none focus:border-emerald-500"
-            />
-        </div>
+              <GoalInput
+                label="Fiber Goal (g)"
+                value={profile.fiberGoal}
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, fiberGoal: value }))
+                }
+              />
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
-                Age
-            </label>
+              <GoalInput
+                label="Protein Goal (g)"
+                value={profile.proteinGoal}
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, proteinGoal: value }))
+                }
+              />
 
-            <input
-                type="number"
+              <GoalInput
+                label="Exercise Goal (cal burned)"
+                value={profile.exerciseGoal}
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, exerciseGoal: value }))
+                }
+              />
+
+              <GoalInput
+                label="Weight Goal (lbs)"
+                value={profile.weightGoal}
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, weightGoal: value }))
+                }
+              />
+
+              <GoalInput
+                label="Age"
                 value={profile.age}
-                onChange={(e) =>
-                setProfile((prev) => ({
-                    ...prev,
-                    age: Number(e.target.value),
-                }))
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, age: value }))
                 }
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-            />
-            </div>
+              />
 
-            <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
-                Sex
-            </label>
-
-            <select
-                value={profile.sex}
-                onChange={(e) =>
-                setProfile((prev) => ({
-                    ...prev,
-                    sex: e.target.value as "female" | "male" | "other",
-                }))
-                }
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-            >
-                <option value="female">Female</option>
-                <option value="male">Male</option>
-                <option value="other">Other</option>
-            </select>
-            </div>
-
-            <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
-                Height (Feet)
-            </label>
-
-            <input
-                type="number"
+              <GoalInput
+                label="Height Feet"
                 value={profile.heightFeet}
-                onChange={(e) =>
-                setProfile((prev) => ({
-                    ...prev,
-                    heightFeet: Number(e.target.value),
-                }))
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, heightFeet: value }))
                 }
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-            />
-            </div>
+              />
 
-            <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
-                Height (Inches)
-            </label>
-
-            <input
-                type="number"
+              <GoalInput
+                label="Height Inches"
                 value={profile.heightInches}
-                onChange={(e) =>
-                setProfile((prev) => ({
-                    ...prev,
-                    heightInches: Number(e.target.value),
-                }))
+                onChange={(value) =>
+                  setProfile((prev) => ({ ...prev, heightInches: value }))
                 }
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-            />
+              />
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-300">
+                  Sex
+                </label>
+
+                <select
+                  value={profile.sex}
+                  onChange={(e) =>
+                    setProfile((prev) => ({
+                      ...prev,
+                      sex: e.target.value as Profile["sex"],
+                    }))
+                  }
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
+                >
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
             </div>
-        </div>
-        </section>
+          </section>
 
           <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
             <h2 className="text-2xl font-semibold">Weight progress</h2>
@@ -253,7 +248,7 @@ const defaultProfile: Profile = {
 
               <button
                 onClick={addWeightEntry}
-                className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-orange-300"
+                className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-emerald-400"
               >
                 Add
               </button>
@@ -267,16 +262,33 @@ const defaultProfile: Profile = {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={sortedWeights}>
-                    <CartesianGrid stroke="#292524" />
-                    <XAxis dataKey="date" stroke="#a8a29e" />
-                    <YAxis stroke="#a8a29e" domain={["dataMin - 5", "dataMax + 5"]} />
+                    <CartesianGrid stroke="#334155" />
+                    <XAxis dataKey="date" stroke="#94a3b8" />
+                    <YAxis
+                      stroke="#94a3b8"
+                      domain={["dataMin - 5", "dataMax + 5"]}
+                    />
                     <Tooltip
                       contentStyle={{
-                        background: "#0c0a09",
-                        border: "1px solid #292524",
+                        background: "#020617",
+                        border: "1px solid #1e293b",
                         borderRadius: "12px",
                       }}
                     />
+
+                    {profile.weightGoal > 0 && (
+                      <ReferenceLine
+                        y={profile.weightGoal}
+                        stroke="#10b981"
+                        strokeDasharray="6 6"
+                        label={{
+                          value: "Goal",
+                          fill: "#10b981",
+                          fontSize: 12,
+                        }}
+                      />
+                    )}
+
                     <Line
                       type="monotone"
                       dataKey="weight"
@@ -299,6 +311,7 @@ const defaultProfile: Profile = {
                     <p className="font-semibold">{entry.weight} lbs</p>
                     <p className="text-sm text-slate-500">{entry.date}</p>
                   </div>
+
                   <button
                     onClick={() => deleteWeightEntry(entry.id)}
                     className="text-sm text-slate-500 hover:text-red-400"
@@ -328,8 +341,9 @@ const defaultProfile: Profile = {
                       <p className="font-semibold">{meal.name}</p>
                       <p className="mt-1 text-sm text-slate-500">
                         {meal.category} · {meal.nutrition.calories} cal ·{" "}
-                        {meal.nutrition.carbs}g carbs · {meal.nutrition.fiber}g
-                        fiber · {meal.nutrition.protein}g protein
+                        {meal.nutrition.carbs}g carbs ·{" "}
+                        {meal.nutrition.fiber}g fiber ·{" "}
+                        {meal.nutrition.protein}g protein
                       </p>
                     </div>
 
@@ -387,7 +401,33 @@ const defaultProfile: Profile = {
           </section>
         </div>
       </div>
+
       <BottomNav />
     </main>
+  );
+}
+
+function GoalInput({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-medium text-slate-300">
+        {label}
+      </label>
+
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
+      />
+    </div>
   );
 }
