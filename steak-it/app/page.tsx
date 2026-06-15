@@ -353,15 +353,7 @@ export default function Home() {
         </div>
 
         <section className="mt-8 grid gap-8 lg:grid-cols-2">
-          <EntryList
-            title="Meals today"
-            items={todaysMeals.map((meal) => ({
-              id: meal.id,
-              title: meal.mealName,
-              subtitle: `${meal.category} · ${meal.nutrition.calories} cal · ${meal.nutrition.protein}g protein`,
-            }))}
-            onDelete={deleteMeal}
-          />
+          <MealsByCategory meals={todaysMeals} onDelete={deleteMeal} />
 
           <EntryList
             title="Exercises today"
@@ -374,6 +366,7 @@ export default function Home() {
             }))}
             onDelete={deleteExercise}
           />
+
         </section>
       </div>
       <BottomNav />
@@ -448,6 +441,77 @@ function EntryList({
             </div>
           ))
         )}
+      </div>
+    </section>
+  );
+}
+function MealsByCategory({
+  meals,
+  onDelete,
+}: {
+  meals: DailyMealEntry[];
+  onDelete: (id: string) => void;
+}) {
+  return (
+    <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-4 md:p-6">
+      <h2 className="text-2xl font-semibold">Meals today</h2>
+
+      <div className="mt-5 space-y-5">
+        {categories.map((category) => {
+          const categoryMeals = meals.filter((meal) => meal.category === category);
+
+          const categoryCalories = categoryMeals.reduce(
+            (sum, meal) => sum + meal.nutrition.calories,
+            0
+          );
+
+          return (
+            <div key={category}>
+              <div className="mb-2 flex items-center justify-between">
+                <h3 className="text-sm font-bold capitalize tracking-wide text-emerald-400">
+                  {category}
+                </h3>
+                <span className="text-xs text-slate-400">
+                  {categoryCalories} cal
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {categoryMeals.length === 0 ? (
+                  <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-950/40 p-4 text-sm text-slate-500">
+                    No {category} entries yet.
+                  </div>
+                ) : (
+                  categoryMeals.map((meal) => (
+                    <div
+                      key={meal.id}
+                      className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="font-semibold">{meal.mealName}</p>
+                          <p className="mt-1 text-sm text-slate-400">
+                            {meal.nutrition.calories} cal ·{" "}
+                            {meal.nutrition.carbs}g carbs ·{" "}
+                            {meal.nutrition.fiber}g fiber ·{" "}
+                            {meal.nutrition.protein}g protein
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => onDelete(meal.id)}
+                          className="text-sm text-slate-500 hover:text-red-400"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
