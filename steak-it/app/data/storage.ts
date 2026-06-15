@@ -4,6 +4,7 @@ export const STORAGE_KEYS = {
   dailyMeals: "steak-it-daily-meals",
   exercises: "steak-it-exercises",
   weightEntries: "steak-it-weight-entries",
+  migraines: "steak-it-migraines",
 };
 
 export function getStorageItem<T>(key: string, fallback: T): T {
