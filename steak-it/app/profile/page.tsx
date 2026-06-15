@@ -32,6 +32,7 @@ const defaultProfile: Profile = {
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
+  exerciseMinutesGoal: 30,
 };
 
 export default function ProfilePage() {
@@ -162,6 +163,14 @@ export default function ProfilePage() {
                 value={profile.exerciseGoal}
                 onChange={(value) =>
                   setProfile((prev) => ({ ...prev, exerciseGoal: value }))
+                }
+              />
+
+              <GoalInput
+                label="Exercise Minutes Goal"
+                value={profile.exerciseMinutesGoal}
+                onChange={(value) =>
+                    setProfile((prev) => ({ ...prev, exerciseMinutesGoal: value }))
                 }
               />
 
