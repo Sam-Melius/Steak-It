@@ -331,31 +331,41 @@ export default function Home() {
                 className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
               />
 
-              <input
-                type="number"
-                placeholder="Calories burned"
-                value={exerciseForm.caloriesBurned}
-                onChange={(e) =>
-                  setExerciseForm((prev) => ({
-                    ...prev,
-                    caloriesBurned: Number(e.target.value),
-                  }))
-                }
-                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-              />
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-300">
+                  Calories Burned
+                </label>
 
-              <input
-                type="number"
-                placeholder="Duration minutes"
-                value={exerciseForm.durationMinutes}
-                onChange={(e) =>
-                  setExerciseForm((prev) => ({
-                    ...prev,
-                    durationMinutes: Number(e.target.value),
-                  }))
-                }
-                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-              />
+                <input
+                  type="number"
+                  value={exerciseForm.caloriesBurned}
+                  onChange={(e) =>
+                    setExerciseForm((prev) => ({
+                      ...prev,
+                      caloriesBurned: Number(e.target.value),
+                    }))
+                  }
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-300">
+                  Duration (Minutes)
+                </label>
+
+                <input
+                  type="number"
+                  value={exerciseForm.durationMinutes}
+                  onChange={(e) =>
+                    setExerciseForm((prev) => ({
+                      ...prev,
+                      durationMinutes: Number(e.target.value),
+                    }))
+                  }
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
+                />
+              </div>
 
               <button
                 onClick={addExercise}

@@ -43,4 +43,22 @@ export type WeightEntry = {
 
 export type Profile = {
   dailyCalorieGoal: number;
+  age: number;
+  heightFeet: number;
+  heightInches: number;
+  sex: "female" | "male" | "other";
+};
+
+export type MigraineEntry = {
+  id: string;
+  date: string;
+  startTime: string;
+  endTime?: string;
+  severity: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+  location: string;
+  symptoms: string[];
+  triggers: string[];
+  medicationTaken: string;
+  reliefMethod: string;
+  notes: string;
 };
