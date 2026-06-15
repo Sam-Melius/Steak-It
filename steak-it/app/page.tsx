@@ -239,19 +239,34 @@ export default function Home() {
           <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-4 md:p-6">
             <h2 className="text-2xl font-semibold">Add meal</h2>
 
+            {savedMeals.length > 0 && (
+              <div className="mt-5">
+                <p className="mb-3 text-xs uppercase tracking-widest text-slate-400">
+                  Saved meals
+                </p>
+
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {savedMeals.map((meal) => (
+                    <button
+                      key={meal.id}
+                      onClick={() => handleSavedMealSelect(meal.id)}
+                      className="min-w-[180px] rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-left transition hover:border-emerald-500"
+                    >
+                      <p className="font-semibold text-slate-100">{meal.name}</p>
+                      <p className="mt-1 text-xs capitalize text-emerald-400">
+                        {meal.category}
+                      </p>
+                      <p className="mt-2 text-xs text-slate-400">
+                        {meal.nutrition.calories} cal · {meal.nutrition.protein}g protein
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="mt-5 grid gap-4">
-              <select
-                value={selectedSavedMealId}
-                onChange={(e) => handleSavedMealSelect(e.target.value)}
-                className="rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
-              >
-                <option value="">Choose saved meal or enter manually</option>
-                {savedMeals.map((meal) => (
-                  <option key={meal.id} value={meal.id}>
-                    {meal.name} · {meal.category}
-                  </option>
-                ))}
-              </select>
+              
 
               <input
                 placeholder="Meal name"
