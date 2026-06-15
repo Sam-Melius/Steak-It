@@ -163,6 +163,27 @@ export default function Home() {
     setSelectedSavedMealId("");
   }
 
+  function saveMealOnly() {
+  if (!mealForm.mealName.trim()) return;
+
+  const savedMeal: SavedMeal = {
+    id: crypto.randomUUID(),
+    name: mealForm.mealName.trim(),
+    category: mealForm.category,
+    nutrition: mealForm.nutrition,
+  };
+
+  setSavedMeals((prev) => [savedMeal, ...prev]);
+
+  setMealForm({
+    mealName: "",
+    category: "breakfast",
+    nutrition: emptyNutrition,
+  });
+
+  setSelectedSavedMealId("");
+}
+
   function addExercise() {
     if (!exerciseForm.name.trim()) return;
 
@@ -312,20 +333,28 @@ export default function Home() {
                 <MacroInput label="Protein" value={mealForm.nutrition.protein} onChange={(v) => updateNutrition("protein", v)} />
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={() => addDailyMeal(false)}
-                  className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-orange-300"
-                >
-                  Add to day
-                </button>
-                <button
-                  onClick={() => addDailyMeal(true)}
-                  className="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200 transition hover:border-emerald-500 hover:bg-emerald-400"
-                >
-                  Add + save meal
-                </button>
-              </div>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => addDailyMeal(false)}
+                className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-emerald-400"
+              >
+                Add to day
+              </button>
+
+              <button
+                onClick={() => addDailyMeal(true)}
+                className="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200 transition hover:border-emerald-500 hover:text-emerald-300"
+              >
+                Add + save meal
+              </button>
+
+              <button
+                onClick={saveMealOnly}
+                className="rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200 transition hover:border-emerald-500 hover:text-emerald-300"
+              >
+                Save meal only
+              </button>
+            </div>
             </div>
           </section>
 
