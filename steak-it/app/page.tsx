@@ -28,8 +28,16 @@ const emptyNutrition: NutritionFacts = {
   protein: 0,
 };
 
+const defaultProfile: Profile = {
+  dailyCalorieGoal: 1800,
+  age: 0,
+  heightFeet: 5,
+  heightInches: 4,
+  sex: "female",
+};
+
 export default function Home() {
-  const [profile, setProfile] = useState<Profile>({ dailyCalorieGoal: 1800 });
+  const [profile, setProfile] = useState<Profile>(defaultProfile);
   const [savedMeals, setSavedMeals] = useState<SavedMeal[]>([]);
   const [dailyMeals, setDailyMeals] = useState<DailyMealEntry[]>([]);
   const [exercises, setExercises] = useState<ExerciseEntry[]>([]);
@@ -50,7 +58,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setProfile(getStorageItem(STORAGE_KEYS.profile, { dailyCalorieGoal: 1800 }));
+    setProfile(getStorageItem(STORAGE_KEYS.profile, defaultProfile));
     setSavedMeals(getStorageItem(STORAGE_KEYS.savedMeals, []));
     setDailyMeals(getStorageItem(STORAGE_KEYS.dailyMeals, []));
     setExercises(getStorageItem(STORAGE_KEYS.exercises, []));
@@ -202,7 +210,10 @@ export default function Home() {
               type="number"
               value={profile.dailyCalorieGoal}
               onChange={(e) =>
-                setProfile({ dailyCalorieGoal: Number(e.target.value) })
+                setProfile((prev) => ({
+                  ...prev,
+                  dailyCalorieGoal: Number(e.target.value),
+                }))
               }
               className="mt-2 w-32 rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-lg font-semibold outline-none focus:border-emerald-500"
             />

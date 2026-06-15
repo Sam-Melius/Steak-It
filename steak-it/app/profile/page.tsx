@@ -22,13 +22,15 @@ import {
 } from "recharts";
 
 export default function ProfilePage() {
-  const [profile, setProfile] = useState<Profile>({
+const defaultProfile: Profile = {
   dailyCalorieGoal: 1800,
   age: 0,
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
-});
+};
+
+  const [profile, setProfile] = useState<Profile>(defaultProfile);
   const [savedMeals, setSavedMeals] = useState<SavedMeal[]>([]);
   const [dailyMeals, setDailyMeals] = useState<DailyMealEntry[]>([]);
   const [exercises, setExercises] = useState<ExerciseEntry[]>([]);
