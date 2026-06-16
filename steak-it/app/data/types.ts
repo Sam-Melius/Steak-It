@@ -3,7 +3,8 @@ export type MealCategory =
   | "lunch"
   | "dinner"
   | "snack"
-  | "dessert";
+  | "dessert"
+  | "drink";
 
 export type NutritionFacts = {
   calories: number;
@@ -53,6 +54,7 @@ export type Profile = {
   heightFeet: number;
   heightInches: number;
   sex: "female" | "male" | "other";
+  netCarbGoal: number;
 };
 
 export type MigraineEntry = {

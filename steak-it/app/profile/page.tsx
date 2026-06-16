@@ -34,6 +34,7 @@ const defaultProfile: Profile = {
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
+  netCarbGoal: 150,
 };
 
 export default function ProfilePage() {
@@ -225,6 +226,17 @@ export default function ProfilePage() {
                   setProfile((prev) => ({ ...prev, heightInches: value }))
                 }
               />
+
+              <GoalInput
+                label="Net Carb Goal (g)"
+                value={profile.netCarbGoal}
+                onChange={(value) =>
+                    setProfile((prev) => ({
+                    ...prev,
+                    netCarbGoal: value,
+                    }))
+                }
+                />
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-slate-300">
