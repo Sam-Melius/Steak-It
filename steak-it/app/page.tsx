@@ -30,15 +30,16 @@ const emptyNutrition: NutritionFacts = {
 
 const defaultProfile: Profile = {
   dailyCalorieGoal: 1800,
+  carbGoal: 200,
   fiberGoal: 25,
   proteinGoal: 120,
   exerciseGoal: 300,
+  exerciseMinutesGoal: 30,
   weightGoal: 0,
   age: 0,
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
-  exerciseMinutesGoal: 30,
 };
 
 export default function Home() {
