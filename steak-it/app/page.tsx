@@ -30,15 +30,16 @@ const emptyNutrition: NutritionFacts = {
 
 const defaultProfile: Profile = {
   dailyCalorieGoal: 1800,
+  carbGoal: 200,
   fiberGoal: 25,
   proteinGoal: 120,
   exerciseGoal: 300,
+  exerciseMinutesGoal: 30,
   weightGoal: 0,
   age: 0,
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
-  exerciseMinutesGoal: 30,
 };
 
 export default function Home() {
@@ -263,6 +264,7 @@ export default function Home() {
           <Stat label="Remaining" value={totals.remaining} />
           <Stat label="Protein" value={`${totals.protein}g/${profile.proteinGoal}g`} />
           <Stat label="Fiber" value={`${totals.fiber}g/${profile.fiberGoal}g`} />
+          <Stat label="Carbs" value={`${totals.carbs}g/${profile.carbGoal}g`} />
           <Stat label="Exercise" value={`${totals.exerciseMinutes}/${profile.exerciseMinutesGoal} min`} />
         </section>
 

@@ -24,15 +24,16 @@ import {
 
 const defaultProfile: Profile = {
   dailyCalorieGoal: 1800,
+  carbGoal: 200,
   fiberGoal: 25,
   proteinGoal: 120,
   exerciseGoal: 300,
+  exerciseMinutesGoal: 30,
   weightGoal: 0,
   age: 0,
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
-  exerciseMinutesGoal: 30,
 };
 
 export default function ProfilePage() {
@@ -48,7 +49,15 @@ export default function ProfilePage() {
   });
 
   useEffect(() => {
-    setProfile(getStorageItem(STORAGE_KEYS.profile, defaultProfile));
+    const savedProfile = getStorageItem(
+        STORAGE_KEYS.profile,
+        defaultProfile
+        );
+
+        setProfile({
+        ...defaultProfile,
+        ...savedProfile,
+        });
     setSavedMeals(getStorageItem(STORAGE_KEYS.savedMeals, []));
     setDailyMeals(getStorageItem(STORAGE_KEYS.dailyMeals, []));
     setExercises(getStorageItem(STORAGE_KEYS.exercises, []));
@@ -157,6 +166,17 @@ export default function ProfilePage() {
                   setProfile((prev) => ({ ...prev, proteinGoal: value }))
                 }
               />
+
+              <GoalInput
+                label="Carb Goal (g)"
+                value={profile.carbGoal}
+                onChange={(value) =>
+                    setProfile((prev) => ({
+                    ...prev,
+                    carbGoal: value,
+                    }))
+                }
+                />
 
               <GoalInput
                 label="Exercise Goal (cal burned)"
@@ -433,7 +453,7 @@ function GoalInput({
 
       <input
         type="number"
-        value={value}
+        value={value ?? 0}
         onChange={(e) => onChange(Number(e.target.value))}
         className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 outline-none focus:border-emerald-500"
       />
