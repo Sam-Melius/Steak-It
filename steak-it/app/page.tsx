@@ -19,6 +19,7 @@ const categories: MealCategory[] = [
   "dinner",
   "snack",
   "dessert",
+  "drink",
 ];
 
 const emptyNutrition: NutritionFacts = {
@@ -40,6 +41,7 @@ const defaultProfile: Profile = {
   heightFeet: 5,
   heightInches: 4,
   sex: "female",
+  netCarbGoal: 150,
 };
 
 function formatGoalNumber(value: number) {
@@ -116,12 +118,13 @@ export default function Home() {
       0
     );
 
-    return {
-      ...mealTotals,
-      exerciseCalories,
-      exerciseMinutes,
-      remaining: profile.dailyCalorieGoal - mealTotals.calories,
-    };
+  return {
+    ...mealTotals,
+    netCarbs: mealTotals.carbs - mealTotals.fiber,
+    exerciseCalories,
+    exerciseMinutes,
+    remaining: profile.dailyCalorieGoal - mealTotals.calories,
+  };
 
   }, [todaysMeals, todaysExercises, profile.dailyCalorieGoal]);
 
@@ -271,10 +274,11 @@ export default function Home() {
           <Stat label="Fiber" value={`${formatGoalNumber(totals.fiber)}g/${formatGoalNumber(profile.fiberGoal)}g`} />
           <Stat label="Carbs" value={`${formatGoalNumber(totals.carbs)}g/${formatGoalNumber(profile.carbGoal)}g`} />
           <Stat label="Exercise" value={`${formatGoalNumber(totals.exerciseMinutes)}/${formatGoalNumber(profile.exerciseMinutesGoal)} min`} />
+          <Stat label="Net Carbs" value={`${formatGoalNumber(totals.netCarbs)}g/${formatGoalNumber(profile.netCarbGoal)}g`} />
         </section>
 
         <section className="mb-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-5">
-          <label className="text-xs uppercase tracking-widest text-slate-500">
+          <label className="text-xs uppercase tracking-widest text-slate-500 p-2">
             Entry date
           </label>
           <input
