@@ -42,6 +42,11 @@ const defaultProfile: Profile = {
   sex: "female",
 };
 
+function formatGoalNumber(value: number) {
+  if (!Number.isFinite(value)) return "0";
+  return Math.round(value).toString();
+}
+
 export default function Home() {
   const [profile, setProfile] = useState<Profile>(defaultProfile);
   const [savedMeals, setSavedMeals] = useState<SavedMeal[]>([]);
@@ -260,12 +265,12 @@ export default function Home() {
         </header>
 
         <section className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
-          <Stat label="Calories" value={`${totals.calories}/${profile.dailyCalorieGoal}`} />
+          <Stat label="Calories" value={`${formatGoalNumber(totals.calories)}/${formatGoalNumber(profile.dailyCalorieGoal)}`} />
           <Stat label="Remaining" value={totals.remaining} />
-          <Stat label="Protein" value={`${totals.protein}g/${profile.proteinGoal}g`} />
-          <Stat label="Fiber" value={`${totals.fiber}g/${profile.fiberGoal}g`} />
-          <Stat label="Carbs" value={`${totals.carbs}g/${profile.carbGoal}g`} />
-          <Stat label="Exercise" value={`${totals.exerciseMinutes}/${profile.exerciseMinutesGoal} min`} />
+          <Stat label="Protein" value={`${formatGoalNumber(totals.protein)}g/${formatGoalNumber(profile.proteinGoal)}g`} />
+          <Stat label="Fiber" value={`${formatGoalNumber(totals.fiber)}g/${formatGoalNumber(profile.fiberGoal)}g`} />
+          <Stat label="Carbs" value={`${formatGoalNumber(totals.carbs)}g/${formatGoalNumber(profile.carbGoal)}g`} />
+          <Stat label="Exercise" value={`${formatGoalNumber(totals.exerciseMinutes)}/${formatGoalNumber(profile.exerciseMinutesGoal)} min`} />
         </section>
 
         <section className="mb-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-5">
@@ -456,7 +461,9 @@ function Stat({ label, value }: { label: string; value: number | string }) {
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
       <p className="text-xs uppercase tracking-widest text-slate-500">{label}</p>
-      <p className="mt-2 text-2xl font-bold">{value}</p>
+      <p className="mt-2 break-words text-xl font-bold leading-tight md:text-2xl">
+        {value}
+      </p>
     </div>
   );
 }
