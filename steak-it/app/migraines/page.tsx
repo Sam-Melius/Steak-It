@@ -24,6 +24,7 @@ const triggerOptions = [
   "Hormones",
   "Screen time",
   "Caffeine",
+  "Excercise",
 ];
 
 const reliefOptions = [
